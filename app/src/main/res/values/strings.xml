@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MVPGrid</string>
+    <string name="add_comment_for_this_image">Add comment for this image</string>
+    <string name="send">Send</string>
+    <string name="content_description">ContentnDescription</string>
+    <string name="search_here">Search Here....</string>
+    <string name="no_result_found">No Result Found</string>
+</resources>
