@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,6 +25,7 @@ class ImageCommentsActivity : AppCompatActivity(), View.OnClickListener {
     private var id: String? = ""
     private var image: String? = ""
     private var name: String? = ""
+    private var toolbar: Toolbar? = null
 
     private lateinit var wordViewModel: WordViewModel
 
@@ -41,6 +43,7 @@ class ImageCommentsActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_comments)
         init()
+        setupToolbarBack()
         setViewData()
         setClick()
         loadListData()
@@ -62,6 +65,23 @@ class ImageCommentsActivity : AppCompatActivity(), View.OnClickListener {
             // Update the cached copy of the words in the adapter.
             words?.let { adapter.setWords(it, id) }
         })
+    }
+
+    /**
+     * Set Toolbar
+     */
+    protected fun setupToolbarBack() {
+        if (toolbar != null) {
+            toolbar!!.title = ""
+            setSupportActionBar(toolbar)
+            if (supportActionBar != null) {
+                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+                supportActionBar!!.setDisplayShowTitleEnabled(true)
+                toolbar!!.title = name
+                toolbar!!.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp)
+                toolbar!!.setNavigationOnClickListener { onBackPressed() }
+            }
+        }
     }
 
     private fun setClick() {
@@ -86,6 +106,7 @@ class ImageCommentsActivity : AppCompatActivity(), View.OnClickListener {
         id = intent.getStringExtra(Constants.KeyConstant.ID)
         image = intent.getStringExtra(Constants.KeyConstant.IMAGE)
         name = intent.getStringExtra(Constants.KeyConstant.TITLE)
+        toolbar = findViewById(R.id.toolbar)
     }
 
     override fun onClick(v: View) {
